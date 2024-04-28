@@ -12,7 +12,7 @@ namespace Kikukawa {
         private Vector3 m_pos = Vector3.zero;
 
         void Start() {
-            //Manager.BGMManager.Instance.FadeBGMChange("OniBaraiBGM02");
+            Manager.BGMManager.Instance.FadeBGMChange("BGM_2");
             Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
             Manager.FadeManager.Instance.SetFadeFlag(false);
             m_pos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
