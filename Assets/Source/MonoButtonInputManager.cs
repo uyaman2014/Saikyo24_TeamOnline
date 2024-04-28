@@ -9,6 +9,16 @@ public class ButtonInputManager : MonoBehaviour
         GameSequenceManager.Instance.GoToNextScene();
     }
 
+    public void TestCountUp()
+    {
+        InputManager.Instance.Clicked();
+    }
+
+    public void TestCreateRoom()
+    {
+        NetworkManager.Instance.CreateRoom();
+    }
+
     // Start is called before the first frame update
     void Start()
     {

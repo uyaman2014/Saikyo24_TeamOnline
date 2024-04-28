@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using WebSocketSharp;
 using UnityEngine;
+using System.Collections;
+using WebSocketSharp;
 
-public class NetworkManager : Singleton<NetworkManager>
+public class ClientExample : MonoBehaviour
 {
-    private WebSocket ws;
-    private string room = "testRoom";
 
-    public NetworkManager()
+    private WebSocket ws;
+
+    void Start()
     {
         ws = new WebSocket("ws://localhost:3000/");
         ws.OnOpen += (sender, e) =>
@@ -35,18 +34,19 @@ public class NetworkManager : Singleton<NetworkManager>
 
     }
 
-    public void CloseConnection()
+    void Update()
+    {
+
+        if (Input.GetKeyUp("s"))
+        {
+            ws.Send("Test Message");
+        }
+
+    }
+
+    void OnDestroy()
     {
         ws.Close();
-    }
-
-    public void SendClickedCount(int ClickCount)
-    {
-        ws.SendAsync("Count:" + ClickCount.ToString(), (b) => { });
-    }
-
-    public void CreateRoom()
-    {
-        ws.SendAsync("CreateRoom:" + room, (b) => { });
+        ws = null;
     }
 }
