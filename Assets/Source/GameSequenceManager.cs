@@ -9,7 +9,6 @@ public class GameSequenceManager : Singleton<GameSequenceManager>
     {
         Boot,
         Menu,
-        SetUp,
         InGame,
         Result,
         Max

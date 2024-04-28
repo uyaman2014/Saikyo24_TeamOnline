@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonInputManager : MonoBehaviour
 {
-    void StartButton()
+    public void StartButton()
     {
         GameSequenceManager.Instance.GoToNextScene();
     }
