@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEnabled: 1
   _defaultTab: 2
-  _triggerEnableMode: 2
+  _triggerEnableMode: 0
   _triggerBehaviour: 0
   _errorNotification: 1
   _enableKeyboardShortcuts: 1
