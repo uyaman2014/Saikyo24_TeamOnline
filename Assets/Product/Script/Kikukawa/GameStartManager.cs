@@ -11,10 +11,16 @@ namespace Kikukawa {
         [SerializeField] bool m_Test = false;
         private Vector3 m_pos = Vector3.zero;
 
+        [SerializeField] Animator m_TitleStart = null;
+
         void Start() {
             Manager.BGMManager.Instance.FadeBGMChange("BGM_2");
             Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 1.0f));
-            Manager.FadeManager.Instance.SetFadeFlag(false);
+            Manager.FadeManager.Instance.SetFadeFlag(false,()=> {
+                if (m_TitleStart) { 
+                    m_TitleStart.SetBool("TitleStart",true);
+                }
+            });
             m_pos = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0);
         }
        void Update() {
@@ -26,8 +32,9 @@ namespace Kikukawa {
         }
 
         public void GameStart() {
+            Manager.BGMManager.Instance.FadeBGMChange("");
             Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
-            Manager.FadeManager.Instance.SetFadeFlag(true,()=>{
+            Manager.FadeManager.Instance.SetFadeFlag(true,()=> {
                 GameSequenceManager.Instance.GoToNextScene();
                 Manager.FadeManager.Instance.SetFadeFlag(false);
             });
