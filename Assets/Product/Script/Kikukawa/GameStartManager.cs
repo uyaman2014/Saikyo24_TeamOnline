@@ -24,5 +24,13 @@ namespace Kikukawa {
                 m_Test = false;
             }
         }
+
+        public void GameStart() {
+            Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+            Manager.FadeManager.Instance.SetFadeFlag(true,()=>{
+                GameSequenceManager.Instance.GoToNextScene();
+                Manager.FadeManager.Instance.SetFadeFlag(false);
+            });
+        }
     }
 }

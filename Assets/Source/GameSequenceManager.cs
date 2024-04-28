@@ -8,6 +8,7 @@ public class GameSequenceManager : Singleton<GameSequenceManager>
     public enum GameState
     {
         Boot,
+        Title,
         Menu,
         InGame,
         Result,
