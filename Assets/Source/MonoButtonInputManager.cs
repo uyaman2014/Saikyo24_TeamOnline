@@ -16,7 +16,7 @@ public class ButtonInputManager : MonoBehaviour
 
     public void TestCreateRoom()
     {
-        NetworkManager.Instance.CreateRoom();
+        NetworkManager.Instance.JoinRoom();
     }
 
     // Start is called before the first frame update
