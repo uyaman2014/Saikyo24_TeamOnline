@@ -1,6 +1,6 @@
 /**
  * @file    GameStartManager.cs
- * @brief   ゲームスタート時の管理クラス
+ * @brief   ゲームリザルト画面の管理クラス
  * @date    2024/04/29
  */
 using MKTSingleton;
