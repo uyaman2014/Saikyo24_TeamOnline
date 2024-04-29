@@ -128,7 +128,10 @@ public class MonoInGameManager : MonoBehaviour
 
     IEnumerator ResultTimer()
     {
-        GameSequenceManager.Instance.GoToNextScene();
+        Manager.BGMManager.Instance.FadeBGMChange("");
+        Manager.FadeManager.Instance.SetFadeFlag(true, () => {
+            GameSequenceManager.Instance.GoToNextScene();
+        });
         yield return null;
     }
 }

@@ -72,7 +72,6 @@ namespace Kikukawa {
             Manager.FadeManager.Instance.SetFadeFlag(true,()=>{ 
                 GameSequenceManager.Instance.GoToNextScene();
             });
-
         }
     }
 }
