@@ -741,8 +741,8 @@ MonoBehaviour:
   ClickButton: {fileID: 1380844304}
   SetsumeiTime: 5
   StartWaitTime: 2
+  SmokeCountRatio: 0.7
   TimeLimit: 10
-  TargetClickCount: 0
   RockSourceImage: {fileID: 1211055930}
   OddRockTexture: {fileID: 21300000, guid: 9af3f8e21b2dd224a9b42e31643d75d2, type: 3}
   EvenRockTexture: {fileID: 21300000, guid: 1275cd07f6acd2244b2fc41271f5117f, type: 3}

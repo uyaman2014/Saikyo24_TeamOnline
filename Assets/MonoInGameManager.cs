@@ -26,6 +26,8 @@ public class MonoInGameManager : MonoBehaviour
     [SerializeField] Image RockSourceImage;
     [SerializeField] Sprite OddRockTexture;
     [SerializeField] Sprite EvenRockTexture;
+    [SerializeField] GameObject Moya;
+    [SerializeField] GameObject GrimReaper;
 
     // Start is called before the first frame update
     void Start()
@@ -93,7 +95,7 @@ public class MonoInGameManager : MonoBehaviour
         }
         if(SmokeCountRatio < (float)countSum / GameParameterManager.Instance.TargetClickCount)
         {
-
+            Moya.GetComponent<Animator>().SetBool("Moya", true);
         }
     }
 
