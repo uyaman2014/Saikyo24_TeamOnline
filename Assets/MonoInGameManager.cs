@@ -28,6 +28,7 @@ public class MonoInGameManager : MonoBehaviour
     [SerializeField] Sprite EvenRockTexture;
     [SerializeField] GameObject Moya;
     [SerializeField] GameObject GrimReaper;
+    bool IsGameEnd = false;
 
     // Start is called before the first frame update
     void Start()
@@ -93,14 +94,18 @@ public class MonoInGameManager : MonoBehaviour
         {
             RedCandles.GetComponent<CandleFireManager>().FireCandle();
         }
-        if(SmokeCountRatio < (float)countSum / GameParameterManager.Instance.TargetClickCount)
+        if(SmokeCountRatio < (float)countSum / GameParameterManager.Instance.TargetClickCount && !IsGameEnd)
         {
+            CurrentClickCountText.gameObject.SetActive(false);
+            Moya.SetActive(true);
+            GrimReaper.GetComponent<Animator>().SetBool("Bless", true);
             Moya.GetComponent<Animator>().SetBool("Moya", true);
         }
     }
 
     IEnumerator SetUpTimer()
     {
+        Moya.SetActive(false);
         ClickButton.SetActive(false);
         Hukidasi_Setsumei.SetActive(true);
         Hukidasi_Start.SetActive(false);
@@ -130,8 +135,15 @@ public class MonoInGameManager : MonoBehaviour
 
     IEnumerator ResultTimer()
     {
+        IsGameEnd = true;
+        Moya.SetActive(true);
+        CurrentClickCountText.gameObject.SetActive(true);
+        GrimReaper.GetComponent<Animator>().SetBool("Bless", false);
+        Moya.GetComponent<Animator>().SetBool("Moya", false);
+        yield return new WaitForSeconds(0.6f);
         Manager.BGMManager.Instance.FadeBGMChange("");
-        Manager.FadeManager.Instance.SetFadeFlag(true, () => {
+        Manager.FadeManager.Instance.SetFadeFlag(true, () =>
+        {
             GameSequenceManager.Instance.GoToNextScene();
         });
         yield return null;

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class InputManager : Singleton<InputManager>
 {
-    private int _clickedCount;
     public void Clicked()
     {
-        _clickedCount++;
-        NetworkManager.Instance.SendClickedCount(_clickedCount);
-    }
-    public void ResetCount()
-    {
-        _clickedCount = 0;
+        var pInfos = NetworkManager.Instance.PlayerInfos;
+        foreach (var pInfo in pInfos)
+        {
+            if(pInfo.Value.bIsSelf) 
+                NetworkManager.Instance.SendClickedCount(pInfo.Value.Count + 1);
+        }
     }
 }

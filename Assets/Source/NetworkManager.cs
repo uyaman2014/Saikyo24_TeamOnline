@@ -23,7 +23,7 @@ public class NetworkManager : Singleton<NetworkManager>
     public NetworkManager()
     {
         IsOnline = false;
-        ws = new WebSocket("ws://localhost:3000/");
+        ws = new WebSocket("ws://uyaman2014.myftp.org:3000/");
         Subscribe();
     }
 
