@@ -12,6 +12,7 @@ namespace Kikukawa {
         private Vector3 m_pos = Vector3.zero;
 
         [SerializeField] Animator m_TitleStart = null;
+        [SerializeField] GameObject m_MainChangeButton;
 
         void Start() {
             Manager.BGMManager.Instance.FadeBGMChange("BGM_2");
@@ -32,9 +33,13 @@ namespace Kikukawa {
         }
 
         public void GameStart() {
+            m_MainChangeButton.SetActive(false);
+
             Manager.BGMManager.Instance.FadeBGMChange("");
             Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
             Manager.FadeManager.Instance.SetFadeFlag(true,()=> {
+                m_TitleStart.gameObject.SetActive(false);
+
                 GameSequenceManager.Instance.GoToNextScene();
             
                 Manager.BGMManager.Instance.FadeBGMChange("Main");
