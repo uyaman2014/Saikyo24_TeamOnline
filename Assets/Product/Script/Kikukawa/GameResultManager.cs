@@ -43,17 +43,21 @@ namespace Kikukawa {
         }
 
         public void SuccessLost() {
-            m_SuccessButtonObj.SetActive(false);
             m_SuccessGrimReaper_Anim.SetBool("Lost", true);
             m_SuccessHukidasiObj.SetActive(true);
             m_TitleChangeObj.SetActive(true);
+            Manager.SEManager.Instance.SEPlay("New/ゲームオーバー笑い声");
+
+            m_SuccessButtonObj.SetActive(false);
         }
 
         public void FailureLost() {
-            m_FailureButtonObj.SetActive(false);
             m_FailureGrimReaper_Anim.SetBool("Lost", true);
             m_FailureHukidasiObj.SetActive(true);
             m_TitleChangeObj.SetActive(true);
+            Manager.SEManager.Instance.SEPlay("New/ゲームオーバー笑い声");
+
+            m_FailureButtonObj.SetActive(false);
         }
 
         public void GoToNextScene() { 
