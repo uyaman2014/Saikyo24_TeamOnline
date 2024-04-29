@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using WebSocketSharp;
-using UnityEngine;
-using UnityEditor;
 using R3;
 
 public class NetworkManager : Singleton<NetworkManager>
 {
+    public class PlayerInfo
+    {
+        public bool bIsSelf;
+        public int Count;
+        public bool bIsReady;
+    }
+
+    private Dictionary<string, PlayerInfo> _playerInfos = new Dictionary<string, PlayerInfo>();
+    public Dictionary<string, PlayerInfo> PlayerInfos { get { return new Dictionary<string, PlayerInfo>(_playerInfos); } } //非同期にplayerinfoが追加されるので、MonoBehaviourとかから参照する際はコピーを渡す
     public bool IsOnline { get; protected set; }
     private WebSocket ws;
     public string RoomName = "";
-    public Subject<bool> JoinRoomSubject = new Subject<bool>();
-    public Subject<int> AllCountSubject = new Subject<int>();
-    public Subject<(string, int)> PlayerCountSubject = new Subject<(string, int)>(); 
+
     public bool IsJoinedRoom { get; protected set; }
 
     public NetworkManager()
@@ -26,37 +31,59 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         ws.OnOpen += (sender, e) =>
         {
-            Debug.Log("WebSocket Open");
             IsOnline = true;
         };
 
         ws.OnMessage += (sender, e) =>
         {
-            Debug.Log("Data: " + e.Data);
             string[] str_array = e.Data.Split(':');
-            switch (str_array[0])
+            string type = str_array[0];
+            string pID = str_array[1];
+            switch (type)
             {
                 case "Join":
                     {
-                        if (str_array[1] == "Success")
+                        switch (pID)
                         {
-                            IsJoinedRoom = true;
-                            JoinRoomSubject.OnNext(true);
-                        }
-                        else
-                        {
-                            IsJoinedRoom = false;
-                            JoinRoomSubject.OnNext(false);
+                            case "Success":
+                                {
+                                    var pInfo = new PlayerInfo() { bIsSelf = true, Count = 0, bIsReady = false };
+                                    _playerInfos[str_array[2]] = pInfo;
+                                    IsJoinedRoom = true;
+                                    break;
+                                }
+                            case "Other":
+                                {
+                                    var pInfo = new PlayerInfo() { bIsSelf = false, Count = 0, bIsReady = false };
+                                    _playerInfos[str_array[2]] = pInfo;
+                                    break;
+                                }
+                            case "FullRoom":
+                                {
+                                    _playerInfos.Clear();
+                                    IsJoinedRoom = false;
+                                    break;
+                                }
+                            default:
+                                break;
                         }
                         break;
                     }
                 case "Count":
                     {
-                        int allCount = int.Parse(str_array[1]);
-                        string id = str_array[2];
-                        int count = int.Parse(str_array[3]);
-                        AllCountSubject.OnNext(allCount);
-                        PlayerCountSubject.OnNext((id, count));
+                        int count = int.Parse(str_array[2]);
+                        _playerInfos[pID].Count = count;
+                        break;
+                    }
+                case "Ready":
+                    {
+                        bool bIsReady = bool.Parse(str_array[2]);
+                        _playerInfos[pID].bIsReady = bIsReady;
+                        break;
+                    }
+                case "Close":
+                    {
+                        _playerInfos.Remove(pID);
                         break;
                     }
                 default:
@@ -67,12 +94,10 @@ public class NetworkManager : Singleton<NetworkManager>
 
         ws.OnError += (sender, e) =>
         {
-            Debug.LogError("WebSocket Error Message: " + e.Message);
         };
 
         ws.OnClose += (sender, e) =>
         {
-            Debug.Log("WebSocket Close");
             IsOnline = false;
         };
         ws.ConnectAsync();
@@ -84,6 +109,11 @@ public class NetworkManager : Singleton<NetworkManager>
         IsJoinedRoom = false;
     }
 
+    public void Close()
+    {
+        ws.CloseAsync();
+    }
+
     public void SendClickedCount(int ClickCount)
     {
         ws.SendAsync("Count:" + ClickCount.ToString(), (b) => { });
@@ -92,5 +122,11 @@ public class NetworkManager : Singleton<NetworkManager>
     public void JoinRoom()
     {
         ws.SendAsync("CreateRoom:" + RoomName, (b) => { });
+        _playerInfos.Clear();
+    }
+
+    public void Ready()
+    {
+        ws.SendAsync("Ready", (b) => { });
     }
 }
