@@ -27,7 +27,13 @@ namespace Kikukawa {
         [SerializeField] GameObject m_TitleChangeObj;
 
         void Start() {
-
+            var pInfos = NetworkManager.Instance.PlayerInfos;
+            int countSum = 0;
+            foreach (var pInfo in pInfos)
+            {
+                countSum += pInfo.Value.Count;
+            }
+            m_GameClearFlag = GameParameterManager.Instance.TargetClickCount >= countSum && GameParameterManager.Instance.TargetClickCount - 10 < countSum;
             if (m_GameClearFlag) {
                 m_Success.SetActive(true);
                 Manager.BGMManager.Instance.FadeBGMChange("Result2");

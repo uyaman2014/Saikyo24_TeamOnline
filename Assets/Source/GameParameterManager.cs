@@ -6,4 +6,5 @@ public class GameParameterManager : Singleton<GameParameterManager>
 {
     public float TimeLimit { get; set; } = 20;
     public int TargetClickCount { get; set; } = 100;
+    public int ClearRange { get; protected set; } = 10;
 }

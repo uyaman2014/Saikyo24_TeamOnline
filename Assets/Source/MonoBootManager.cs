@@ -12,7 +12,7 @@ public class MonoBootManager : MonoBehaviour
         _ = GameSequenceManager.Instance;
         _ = InputManager.Instance;
         _ = ScoreManager.Instance;
-
+        NetworkManager.Instance.ResetGame();
         GameSequenceManager.Instance.GoToNextScene();
     }
 

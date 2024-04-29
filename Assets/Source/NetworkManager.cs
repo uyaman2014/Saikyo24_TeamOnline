@@ -105,7 +105,9 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void ResetGame()
     {
-        ws.Send("Clear");
+        if(ws.IsAlive)
+            ws.Send("Clear");
+        _playerInfos.Clear();
         IsJoinedRoom = false;
     }
 

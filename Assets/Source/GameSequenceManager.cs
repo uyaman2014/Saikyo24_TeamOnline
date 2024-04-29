@@ -19,7 +19,7 @@ public class GameSequenceManager : Singleton<GameSequenceManager>
 
     public AsyncOperation GoToNextScene()
     {
-        return LoadScene((GameState)Mathf.Max(1, (((int)CurrentGameState + 1) % (int)GameState.Max)));
+        return LoadScene((GameState)Mathf.Max(0, (((int)CurrentGameState + 1) % (int)GameState.Max)));
     }
 
     public AsyncOperation LoadScene(GameState gameState)
