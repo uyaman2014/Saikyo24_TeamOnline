@@ -114,6 +114,11 @@ public class NetworkManager : Singleton<NetworkManager>
         ws.CloseAsync();
     }
 
+    public void Open()
+    {
+        ws.ConnectAsync();
+    }
+
     public void SendClickedCount(int ClickCount)
     {
         ws.SendAsync("Count:" + ClickCount.ToString(), (b) => { });
