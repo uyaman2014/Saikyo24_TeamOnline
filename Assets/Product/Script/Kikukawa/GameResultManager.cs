@@ -34,7 +34,6 @@ namespace Kikukawa {
                 Manager.FadeManager.Instance.SetFadeFlag(false,()=> {
                     m_GameClearObj.SetActive(true);
                 });
-                
             } else {
                 m_Failure.SetActive(true);
                 Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
