@@ -36,6 +36,8 @@ namespace Kikukawa {
             Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
             Manager.FadeManager.Instance.SetFadeFlag(true,()=> {
                 GameSequenceManager.Instance.GoToNextScene();
+            
+                Manager.BGMManager.Instance.FadeBGMChange("Main");
                 Manager.FadeManager.Instance.SetFadeFlag(false);
             });
         }
