@@ -5,5 +5,8 @@ namespace Kikukawa {
         public void OnSEPlay() {
             Manager.SEManager.Instance.SEPlay("New/ゲームオーバー_鎌");
         }
+        public void OnResultBGMPlay() { 
+            Manager.BGMManager.Instance.FadeBGMChange("Result2");
+        }
     }
 }

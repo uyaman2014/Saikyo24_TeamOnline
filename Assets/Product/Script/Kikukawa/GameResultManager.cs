@@ -9,12 +9,18 @@ using UnityEngine;
 namespace Kikukawa {
     public class GameResultManager : SingletonMonoBehaviour<GameResultManager> {
         [SerializeField] GameObject m_Inochi_Anim;
+        [SerializeField] bool m_GameClearFlag = false;
 
         void Start() {
-            Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
-            if (m_Inochi_Anim) {
-                m_Inochi_Anim.SetActive(true);
+            if (m_GameClearFlag) {
+
+            } else {
+                Manager.FadeManager.Instance.SetFadeColor(new Color(0.0f, 0.0f, 0.0f, 0.0f));
+                if (m_Inochi_Anim) {
+                    m_Inochi_Anim.SetActive(true);
+                }
             }
+
         }
     }
 }
